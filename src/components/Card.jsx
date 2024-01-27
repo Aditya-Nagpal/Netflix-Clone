@@ -10,7 +10,8 @@ import { BiChevronDown } from 'react-icons/bi'
 
 
 
-export default function Card({movieData, isLiked=false }) {
+export default React.memo(
+function Card({movieData, isLiked=false }) {
     const navigate=useNavigate();
     const [isHovered,setIsHovered]=useState(false);
     return (
@@ -51,8 +52,8 @@ export default function Card({movieData, isLiked=false }) {
         }
     </Container>
     );
-};
-
+}
+)
 const Container=styled.div`
     max-width: 230px;
     width: 230px;

@@ -21,7 +21,7 @@ export default function Netflix() {
   },[dispatch]);
   useEffect(() => {
     if(genresLoaded){dispatch(fetchMovies({type: 'all'}));}
-  });
+  },[genresLoaded,dispatch]);
   window.onscroll=()=>{
     setIsScrolled(window.scrollY === 0 ? false : true);
     return () => window.onscroll=null;
