@@ -28,9 +28,9 @@ export default function TvShows() {
         return () => window.onscroll=null;
     };
     onAuthStateChanged(firebaseAuth,(currentUser)=>{
-        // if(currentUser){
-        //     navigate('/');
-        // }
+        if(!currentUser){
+            navigate('/login');
+        }
     });
   return (
     <Container>

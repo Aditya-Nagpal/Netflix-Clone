@@ -7,13 +7,29 @@ import {RiThumbDownFill, RiThumbUpFill} from 'react-icons/ri'
 import { BsCheck } from 'react-icons/bs'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BiChevronDown } from 'react-icons/bi'
-
-
+import {firebaseAuth} from '../utils/firebase-config'
+import { onAuthStateChanged } from '@firebase/auth';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { removeFromLikedMovies } from '../store';
 
 export default React.memo(
 function Card({movieData, isLiked=false }) {
+    const dispatch=useDispatch();
     const navigate=useNavigate();
     const [isHovered,setIsHovered]=useState(false);
+    const [email,setEmail]=useState(undefined);
+    onAuthStateChanged(firebaseAuth,(currentUser)=>{
+        if(currentUser){setEmail(currentUser.email);}
+        else{navigate('/login');}
+    });
+    const addToList=async () => {
+        try {
+            await axios.post('http://localhost:5000/api/user/add',{email,data: movieData});
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
     <Container onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
         <img src={`https://image.tmdb.org/t/p/w500${movieData.image}`} alt="movie" />
@@ -33,9 +49,9 @@ function Card({movieData, isLiked=false }) {
                                 <RiThumbDownFill title='dislike' />
                                 {
                                     isLiked ? (
-                                        <BsCheck title='Remove From List' />
+                                        <BsCheck title='Remove From List' onClick={() => dispatch(removeFromLikedMovies({movieId: movieData.id, email}))} />
                                     ) : (
-                                        <AiOutlinePlus title='Add To My List' />
+                                        <AiOutlinePlus title='Add To My List' onClick={addToList} />
                                     )
                                 }
                             </div>
