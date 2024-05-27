@@ -1,5 +1,4 @@
-Netlify deployment: https://netflix-clone-aditya-nagpal.netlify.app/
-
+Netlify deployment: https://netlfix-clone-aditya-nagpal.netlify.app/
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://netlfix-clone-aditya-nagpal.netlify.app/).
